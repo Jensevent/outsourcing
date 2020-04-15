@@ -7,13 +7,12 @@
     <div class="right-hand-side">
         <img src="~/img/p8gf.png"usemap="#P8-00" height="926" width="874"/>
         <map name="P8-00">
-            <area onclick="OpenModal(this.dataset.roomnumber)" data-roomnumber="0.14" id="area-0.14" shape="poly" coords="48,25, 48,290, 309,289, 308,25, 196,25, 196,222, 116,222, 116,94, 196,94, 196,25 ,48,25" />
-            <area onclick="OpenModal(this.dataset.roomnumber)" data-roomnumber="0.15" id="area-0.15" shape="poly" coords="47,293, 47,378, 198,378, 198,482, 183,482, 183,542, 198,542, 198,647, 254,647, 254,556, 312,556, 312,471, 254,471, 254,293, 47,293"/>
-            <area onclick="OpenModal(this.dataset.roomnumber)" data-roomnumber="0.13" id="area-0.13" shape="rect" coords="256,293,313,349"/>
-            <area onclick="OpenModal(this.dataset.roomnumber)" data-roomnumber="0.06" id="area-0.06" shape="rect" coords="314,25,581,292" />
-            <area onclick="OpenModal(this.dataset.roomnumber)" data-roomnumber="0.18" id="area-0.18" shape="rect" coords="48,648,312,915" />
-            <area onclick="OpenModal(this.dataset.roomnumber)" data-roomnumber="0.14A" id="area-0.14A" shape="rect" coords="116,94,196,222" />
-
+            <area onclick="OpenModal(this.id)" data-roomnumber="0.14" id="area-PK19" shape="poly" coords="48,25, 48,290, 309,289, 308,25, 196,25, 196,222, 116,222, 116,94, 196,94, 196,25 ,48,25" />
+            <area onclick="OpenModal(this.id)" data-roomnumber="0.15" id="area-PK21" shape="poly" coords="47,293, 47,378, 198,378, 198,482, 183,482, 183,542, 198,542, 198,647, 254,647, 254,556, 312,556, 312,471, 254,471, 254,293, 47,293"/>
+            <area onclick="OpenModal(this.id)" data-roomnumber="0.13" id="area-PK18" shape="rect" coords="256,293,313,349"/>
+            <area onclick="OpenModal(this.id)" data-roomnumber="0.06" id="area-PK8" shape="rect" coords="314,25,581,292" />
+            <area onclick="OpenModal(this.id)" data-roomnumber="0.18" id="area-PK22" shape="rect" coords="48,648,312,915" />
+            <area onclick="OpenModal(this.id)" data-roomnumber="0.14A" id="area-PK20" shape="rect" coords="116,94,196,222" />
         </map>
     </div>
     <div id="modal" data-response="fault">
@@ -32,14 +31,31 @@
         function ConfirmRoom() {
             var x = document.getElementById("modal");
             console.log("Gelukt");
-            x.dataset.response = "faulty";
+            //x.dataset.response = "fault";
             var y = document.getElementById("modal-span");
             y.innerText = "Geen kamer geselecteerd";
+            var roomnumber = x.dataset.response;
+            roomnumber = roomnumber.replace("area-PK", "");
+            $.ajax({
+                type: 'GET',
+                url: 'Map/RoomChange',
+                data: { id: roomnumber },
+                datatype: 'json',
+                complete: function(XMLHttpRequest, textStatus) {
+                    var response = $.parseJSON(XMLHttpRequest.reponseText);
+                    if ((XMLHttpRequest.responseText === "false") || (Response.Status === false)) {
+                        alert(response);
+                    } else {
+                        alert(response + "Het is gelukt.");
+                    }
+                                },
+            });
+            x.dataset.response = "fault";
         }
 
         function ClearModal() {
             var x = document.getElementById("modal");
-            x.dataset.response = "faulty";
+            x.dataset.response = "fault";
             var y = document.getElementById("modal-span");
             y.innerText = "Geen kamer geselecteerd";
             console.log("geannuleerd");

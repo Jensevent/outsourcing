@@ -46,7 +46,7 @@ namespace outsource_onderdeel
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Map}/{action=Index}/{id?}");
             });
         }
     }
