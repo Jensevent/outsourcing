@@ -15,40 +15,74 @@
             <area onclick="OpenModal(this.id)" data-roomnumber="0.14A" id="area-PK20" shape="rect" coords="116,94,196,222" />
         </map>
     </div>
-    <div id="modal" data-response="fault">
-        <p>Zit je in: <span id="modal-span">kamernummer</span></p>
-        <button onclick="ConfirmRoom()">Ja</button><button onclick="ClearModal()">Nee</button>
+    <div id="modal-enveloper">
+        <div id="modal" data-response="fault">
+            <p>Zit je in: <span id="modal-span">kamernummer</span></p>
+            <button onclick="ConfirmRoom()">Ja</button><button onclick="ClearModal()">Nee</button>
+        </div>
     </div>
+    <style>
+        area:hover {
+            cursor: pointer;
+        }
+        
+        #modal-enveloper {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        #modal-enveloper.visible {
+            display: block;
+        }
+
+        #modal {
+            position: absolute;
+            width: 250px;
+            height: 200px;
+            padding: 15px;
+            border-radius: 15px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+        }
+    </style>
     <script>
-        function OpenModal(roomnumber) {
+        document.addEventListener("DOMContentLoaded", function() {
+            $("map").imageMapResize();
+        });
+        function OpenModal(roomId) {
             var x = document.getElementById("modal");
-            x.dataset.response = roomnumber;
-            console.log(roomnumber);
+            x.dataset.response = roomId;
             var y = document.getElementById("modal-span");
+            var Id = document.getElementById(roomId);
+            var roomnumber = Id.dataset.roomnumber;
             y.innerText = roomnumber + "?";
+            var z = document.getElementById("modal-enveloper");
+            z.classList.add("visible");
         }
 
         function ConfirmRoom() {
             var x = document.getElementById("modal");
-            console.log("Gelukt");
-            //x.dataset.response = "fault";
             var y = document.getElementById("modal-span");
-            y.innerText = "Geen kamer geselecteerd";
             var roomnumber = x.dataset.response;
             roomnumber = roomnumber.replace("area-PK", "");
+            y.innerText = "Verwerken...."
             $.ajax({
                 type: 'GET',
                 url: 'Map/RoomChange',
                 data: { id: roomnumber },
                 datatype: 'json',
-                complete: function(XMLHttpRequest, textStatus) {
-                    var response = $.parseJSON(XMLHttpRequest.reponseText);
-                    if ((XMLHttpRequest.responseText === "false") || (Response.Status === false)) {
-                        alert(response);
-                    } else {
-                        alert(response + "Het is gelukt.");
-                    }
-                                },
+                complete: function() {
+                    alert("Het is opgelsagen!");
+                    var z = document.getElementById("modal-enveloper");
+                    z.classList.remove("visible");
+                },
             });
             x.dataset.response = "fault";
         }
@@ -59,6 +93,8 @@
             var y = document.getElementById("modal-span");
             y.innerText = "Geen kamer geselecteerd";
             console.log("geannuleerd");
+            var z = document.getElementById("modal-enveloper");
+            z.classList.remove("visible");
         }
     </script>
 </div>
