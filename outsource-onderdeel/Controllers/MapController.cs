@@ -13,16 +13,23 @@ namespace outsource_onderdeel.Controllers
     public class MapController : Controller
     {
         private readonly UserRepo userRepo;
+        private readonly LocationRepo locationRepo;
 
         public MapController()
         {
-            IUserContext Icontext = new UserMSSQLContext();
-            userRepo = new UserRepo(Icontext);
+            IUserContext IUContext = new UserMSSQLContext();
+            ILocationContext ILContext = new LocationMSSQLContext();
+            userRepo = new UserRepo(IUContext);
+            locationRepo = new LocationRepo(ILContext);
         }
 
         public IActionResult Index()
         {
-            return View();
+            int uvm;
+            uvm = userRepo.GetCurrentUserLocation(1);
+            LocationViewModel lvm = new LocationViewModel();
+            lvm = locationRepo.GetByID(uvm);
+            return View(lvm);
         }
 
         [HttpGet]

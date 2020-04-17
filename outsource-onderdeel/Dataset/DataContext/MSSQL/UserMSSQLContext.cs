@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using outsource_onderdeel.Models;
 using outsource_onderdeel.Models.ViewModels;
 
 namespace outsource_onderdeel.Dataset.DataContext.MSSQL
@@ -25,6 +26,17 @@ namespace outsource_onderdeel.Dataset.DataContext.MSSQL
             UserViewModel User = DataSetParser.DataSetToUser(Result, 0);
 
             return User;
+        }
+
+        public int GetCurrentUserLocation(long UserId)
+        {
+            string SQL = "SELECT Location_ID FROM [User] WHERE ID = @User_ID";
+            List<KeyValuePair<object, object>> param = new List<KeyValuePair<object, object>>();
+            param.Add(new KeyValuePair<object, object>("User_ID", UserId));
+
+            DataTable dt = ExecuteQuery(SQL, param);
+            int result = Convert.ToInt32(dt.Rows[0][0]);
+            return result;
         }
     }
 }

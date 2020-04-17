@@ -9,5 +9,6 @@ namespace outsource_onderdeel.Dataset.DataContext
     public interface IUserContext
     {
         public UserViewModel InsertUserLocationByID(long UId, long LId);
+        public int GetCurrentUserLocation(long UserId);
     }
 }

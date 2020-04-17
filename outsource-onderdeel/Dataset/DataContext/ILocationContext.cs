@@ -8,6 +8,6 @@ namespace outsource_onderdeel.Dataset.DataContext
 {
     public interface ILocationContext
     {
-        //LocationViewModel GetByID(long id);
+        public LocationViewModel GetByID(long LocationId);
     }
 }

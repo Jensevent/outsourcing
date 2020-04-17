@@ -15,9 +15,9 @@ namespace outsource_onderdeel.Dataset.DataContext.Repositories
             Context = context;
         }
 
-        //public LocationViewModel GetByID(long ID)
-        //{
-        //    return Context.GetByID(ID);
-        //}
+        public LocationViewModel GetByID(long LocationId)
+        {
+            return Context.GetByID(LocationId);
+        }
     }
 }

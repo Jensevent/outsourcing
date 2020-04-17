@@ -19,5 +19,10 @@ namespace outsource_onderdeel.Dataset.DataContext.Repositories
         {
             return Context.InsertUserLocationByID(UId, LId);
         }
+
+        public int GetCurrentUserLocation(long UserId)
+        {
+            return Context.GetCurrentUserLocation(UserId);
+        }
     }
 }
