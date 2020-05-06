@@ -31,7 +31,6 @@ namespace outsource_onderdeel.Models
         public void SetLocation(int givenId)
         {
             this.LocationId = givenId;
-            // update in db
         }
 
         public void ShowLocation()

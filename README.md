@@ -1,1 +1,1 @@
-# outosurcing
+# outsourcing

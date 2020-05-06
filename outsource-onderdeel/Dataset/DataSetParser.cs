@@ -10,7 +10,6 @@ namespace outsource_onderdeel.Dataset
 {
     public static class DataSetParser
     {
-
         public static LocationViewModel DataSetToLocation(DataTable set)
         {
             return new LocationViewModel()

@@ -1,7 +1,7 @@
 ﻿@model outsource_onderdeel.Models.ViewModels.LocationViewModel;
 @{
     ViewData["Title"] = "Map";
-    ViewData["currentLocation"] = Model.Floor.ToString() + "." + Model.Room;
+    ViewData["CurrentLocation"] = Model.Floor.ToString() + "." + Model.Room;
 }
 
 
@@ -10,19 +10,19 @@
     <!-- Header -->
     <div class="left-hand-side">
         <h1> Waar ben je?</h1>
-        <p> Je bent nu in @ViewData["CurrentLocation"]</p>
+        <p> Je bent nu in <span id="UserCurrentLocation">@ViewData["CurrentLocation"] </span></p>
     </div>
 
     <!-- Map -->
     <div class="right-hand-side">
-        <img src="~/img/p8gf.png" usemap="#P8-00" height="926" width="874" />
+        <img src="~/img/p8gf.png" usemap="#P8-00"/>
         <map name="P8-00">
-            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.06" alt="0.06" id="area-PK8" shape="rect" coords="314,25,581,292" />
-            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.13" alt="0.13" id="area-PK18" shape="rect" coords="256,293,313,349" />
-            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.14" alt="0.14" id="area-PK19" shape="poly" coords="48,25, 48,290, 309,289, 308,25, 196,25, 196,222, 116,222, 116,94, 196,94, 196,25 ,48,25" />
-            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.14A" alt="0.14A" id="area-PK20" shape="rect" coords="116,94,196,222" />
-            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.15" alt="0.15" id="area-PK21" shape="poly" coords="47,293, 47,378, 198,378, 198,482, 183,482, 183,542, 198,542, 198,647, 254,647, 254,556, 312,556, 312,471, 254,471, 254,293, 47,293" />
-            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.18" alt="0.18" id="area-PK22" shape="rect" coords="48,648,312,915" />
+            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.06"  alt="0.06"   id="area-PK8" shape="rect" coords="314,25,581,292" />
+            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.13"  alt="0.13"   id="area-PK18" shape="rect" coords="256,293,313,349" />
+            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.14"  alt="0.14"   id="area-PK19" shape="poly" coords="48,25, 48,290, 309,289, 308,25, 196,25, 196,222, 116,222, 116,94, 196,94, 196,25 ,48,25" />
+            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.14A" alt="0.14A"  id="area-PK20" shape="rect" coords="116,94,196,222" />
+            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.15"  alt="0.15"   id="area-PK21" shape="poly" coords="47,293, 47,378, 198,378, 198,482, 183,482, 183,542, 198,542, 198,647, 254,647, 254,556, 312,556, 312,471, 254,471, 254,293, 47,293" />
+            <area onclick="OpenModal(this.id)" href="#" data-roomnumber="0.18"  alt="0.18"   id="area-PK22" shape="rect" coords="48,648,312,915" />
         </map>
     </div>
 
@@ -112,9 +112,10 @@
                 data: { id: roomnumber },
                 datatype: 'json',
                 complete: function () {
-                    alert("Het is opgelsagen!");
+                    alert("Het is opgeslagen!");
                     var z = document.getElementById("modal-enveloper");
                     z.classList.remove("visible");
+                    Id.classList.remove("selected");
                     var spanEl = document.getElementById("UserCurrentLocation");
                     spanEl.innerText = Id.dataset.roomnumber;
                 },
